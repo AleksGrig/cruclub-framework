@@ -9,11 +9,5 @@
 		<classes>
 			<class name="testcases.SingleCruiseTest"></class>
 		</classes>
-	</test> <!-- Test -->
-	
-	<test thread-count="1" name="ParameterizedSearchTest">
-		<classes>
-			<class name="testcases.ParameterizedSearchTest"></class>
-		</classes>
-	</test> <!-- Test -->
+	</test> <!-- Test -->	
 </suite> <!-- Suite -->

@@ -2,23 +2,18 @@ package pages.actions;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import enums.By;
 import pages.locators.SearchPageLocators;
 
-public class SearchPage {
+public class SearchPage extends BasePage {
 
-	private WebDriverWait wait;
-	private SearchPageLocators search;
+	private SearchPageLocators search = new SearchPageLocators();
 
 	public SearchPage(WebDriver driver) {
-		this.search = new SearchPageLocators();
-		AjaxElementLocatorFactory factory = new AjaxElementLocatorFactory(driver, 10);
+		super(driver);
 		PageFactory.initElements(factory, this.search);
-		wait = new WebDriverWait(driver, 5);
 	}
 
 	public SearchPage sort(By by) {

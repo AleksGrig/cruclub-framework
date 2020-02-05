@@ -19,7 +19,7 @@ public class ParameterizedSearchTest extends BaseTest {
 
 	@Test
 	public void parameterizedSearchTest() {
-		double priceLimit = 60000;
+		double priceLimit = 70000;
 		HomePage home = new HomePage(driver);
 		if (home.searchCruises(Region.parseString("BritishIslands"), Country.parseString("GreatBritain"), City.Genoa,
 				"31 декабрь").sort(By.Price).isCheaper(priceLimit)) {

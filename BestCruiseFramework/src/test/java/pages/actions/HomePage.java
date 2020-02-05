@@ -8,29 +8,22 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import enums.City;
 import enums.Country;
 import enums.Region;
 import pages.locators.HomePageLocators;
 
-public class HomePage {
+public class HomePage extends BasePage {
 
-	private WebDriver driver;
-	private WebDriverWait wait;
-	private pages.locators.HomePageLocators home;
+	private pages.locators.HomePageLocators home = new HomePageLocators();
 	private static final int MIN_CRUISE_LENGTH = 6;
 	private static final String END_SEARCH_DATE = "1 июнь";
 
 	public HomePage(WebDriver driver) {
-		this.driver = driver;
-		this.home = new HomePageLocators();
-		AjaxElementLocatorFactory factory = new AjaxElementLocatorFactory(driver, 10);
+		super(driver);
 		PageFactory.initElements(factory, this.home);
-		wait = new WebDriverWait(driver, 30);
 	}
 
 	public SearchPage searchCruises(City initialPort) {
@@ -201,9 +194,5 @@ public class HomePage {
 			action.sendKeys(Keys.ARROW_RIGHT).perform();
 		}
 		home.numberOfDaysLink.click();
-	}
-
-	public int cruiseSearchCount() {
-		return home.cruiseSearchOptions.size();
 	}
 }
