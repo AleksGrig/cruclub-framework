@@ -35,7 +35,10 @@ public class ExtentListeners implements ITestListener {
 	@Override
 	public void onTestSuccess(ITestResult result) {
 		String methodName=result.getMethod().getMethodName();
-		String logText="<b>"+"TEST CASE:- "+ methodName.toUpperCase()+ " PASSED"+"</b>";		
+		String logText = "<b>" + "TEST CASE:- " + methodName.toUpperCase() + " PASSED" + "</b>";
+		Object currentClass = result.getInstance();
+		WebDriver driver = ((BaseTest) currentClass).getDriver();
+		testReport.get().pass("<a href='" + driver.getCurrentUrl() + "'>Cruises found</a>");
 		Markup m=MarkupHelper.createLabel(logText, ExtentColor.GREEN);
 		testReport.get().pass(m);
 	}

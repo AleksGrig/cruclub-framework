@@ -13,6 +13,6 @@ class BasePage {
 	BasePage(WebDriver driver) {
 		this.driver = driver;
 		factory = new AjaxElementLocatorFactory(driver, 10);
-		wait = new WebDriverWait(driver, 15);
+		wait = new WebDriverWait(driver, 3);
 	}
 }
