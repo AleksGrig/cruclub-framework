@@ -67,7 +67,8 @@ public class ExtentListeners implements ITestListener {
 	@Override
 	public void onTestSkipped(ITestResult result) {
 		String methodName=result.getMethod().getMethodName();
-		String logText="<b>"+"Test Case:- "+ methodName+ " Skipped"+"</b>";		
+		testReport.get().skip(result.getThrowable().getMessage());
+		String logText = "<b>" + "Test Case:- " + methodName + " Skipped, message: " + "</b>";
 		Markup m=MarkupHelper.createLabel(logText, ExtentColor.YELLOW);
 		testReport.get().skip(m);
 	}

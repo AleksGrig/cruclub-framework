@@ -54,6 +54,8 @@ public class HomePageLocators {
 	public WebElement next;
 	@FindBy(xpath = "//button[@class='applyBtn bs-btn bs-btn-xs bs-btn-primary']")
 	public WebElement applyCalendar;
+	@FindBy(id = "fltResult")
+	public WebElement numberOfCruises;
 	@FindBy(id = "btnSubmit")
 	public WebElement submitCruiseOptionsButton;
 	@FindBy(id = "ddDCity_link")

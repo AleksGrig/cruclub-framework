@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.SkipException;
 
 import enums.City;
 import enums.Country;
@@ -86,12 +87,23 @@ public class HomePage extends BasePage {
 			String date) {
 		chooseRegion(region);
 		chooseCountry(country);
-		wait.until(ExpectedConditions.elementToBeClickable(home.initialPortLink));
 		chooseInitialPort(initialPort);
 		chooseEndDate(date);
 		chooseMinLength(minCruiseLength);
+		checkNumberOfCruises();
 		home.submitCruiseOptionsButton.click();
 		return new SearchPage(driver);
+	}
+
+	private void checkNumberOfCruises() {
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		if (home.numberOfCruises.getText().strip().equalsIgnoreCase("0")) {
+			throw new SkipException("No Cruises found!");
+		}
 	}
 
 	private void chooseEndDate(String date) {
@@ -161,6 +173,7 @@ public class HomePage extends BasePage {
 	}
 
 	private void chooseInitialPort(City initialPort) {
+		wait.until(ExpectedConditions.elementToBeClickable(home.initialPortLink));
 		home.initialPortLink.click();
 		switch (initialPort) {
 		case Rome:

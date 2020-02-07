@@ -9,7 +9,7 @@ public class DataProviders {
 	private static ExcelReader excel = new ExcelReader("src/test/resources/excel/testdata.xlsx");
 
 	@DataProvider(name = "dp")
-	public static Object[][] getData(Method method) {
+	public static synchronized Object[][] getData(Method method) {
 		String sheetName = method.getName();
 		int rows = excel.getRowCount(sheetName);
 		int cols = excel.getColumnCount(sheetName);
