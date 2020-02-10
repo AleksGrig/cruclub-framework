@@ -16,9 +16,8 @@ public class SingleCruiseTest extends BaseTest {
 		getDriver().get(data.get("link"));
 		double price = Double.parseDouble(getDriver().findElement(By.id(data.get("priceTag"))).getText().split(" ")[0]);
 		double priceLimit = Double.parseDouble(data.get("priceLimit"));
-		String cruiseName = data.get("cruiseName");
 		if (price < priceLimit) {
-			Assert.fail(cruiseName + " inside range!!!. Price is " + price + ", limit is " + priceLimit);
+			Assert.fail();
 		}
 	}
 }

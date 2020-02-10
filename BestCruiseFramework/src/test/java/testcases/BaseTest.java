@@ -11,9 +11,8 @@ import org.testng.annotations.BeforeTest;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-public class BaseTest {
+public abstract class BaseTest {
 
-	// protected WebDriver driver;
 	private static ThreadLocal<WebDriver> localDriver = new ThreadLocal<>();
 
 	void checkRunmode(String runmode) {
@@ -22,7 +21,7 @@ public class BaseTest {
 		}
 	}
 
-	public WebDriver getDriver() {
+	public static WebDriver getDriver() {
 		return localDriver.get();
 	}
 

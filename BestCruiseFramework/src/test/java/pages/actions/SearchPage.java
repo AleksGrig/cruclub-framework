@@ -1,6 +1,5 @@
 package pages.actions;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
@@ -11,8 +10,7 @@ public class SearchPage extends BasePage {
 
 	private SearchPageLocators search = new SearchPageLocators();
 
-	public SearchPage(WebDriver driver) {
-		super(driver);
+	public SearchPage() {
 		PageFactory.initElements(factory, this.search);
 	}
 
@@ -29,7 +27,7 @@ public class SearchPage extends BasePage {
 		return this;
 	}
 
-	public boolean isCheaper(double priceLimit) {
+	public boolean cheaperThan(double priceLimit) {
 		double price = Double.parseDouble(search.firstPriceTag.getText().split(" ")[0]);
 		if (price < priceLimit) {
 			return true;

@@ -2,7 +2,6 @@ package utilities;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.Keys;
@@ -22,6 +21,7 @@ public class ExtentManager extends BaseTest {
 	private static ExtentReports extent;
 	private static String screenshotName;
 	private static String screenshotFolder = "reports/";
+	private static Integer counter = 1;
 
 	public static String getScreenshotName() {
 		return screenshotName;
@@ -50,8 +50,8 @@ public class ExtentManager extends BaseTest {
 			action.sendKeys(Keys.ARROW_DOWN).build().perform();
 		}
 		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		Date date = new Date();
-		screenshotName = date.toString().replace(":", "-").replace(" ", "_") + ".jpg";
+		screenshotName = counter.toString() + ".jpg";
+		counter++;
 		try {
 			FileUtils.copyFile(scrFile, new File(screenshotFolder + screenshotName));
 		} catch (IOException e) {

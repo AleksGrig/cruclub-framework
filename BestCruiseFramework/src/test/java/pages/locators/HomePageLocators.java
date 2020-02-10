@@ -59,7 +59,7 @@ public class HomePageLocators {
 	@FindBy(id = "btnSubmit")
 	public WebElement submitCruiseOptionsButton;
 	@FindBy(id = "ddDCity_link")
-	public WebElement initialPortLink;
+	public WebElement depaturePortLink;
 	@FindBy(id = "ddDCity_li_0")
 	public WebElement anyCity;
 	@FindAll({ @FindBy(xpath = "//span[text()='Италия, Генуя']"),

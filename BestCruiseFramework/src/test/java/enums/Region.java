@@ -8,7 +8,7 @@ public enum Region
 	Mediterranean,
 	NearEast;
 
-	public static Region parseString(String option) {
+	public static Region parseRegion(String option) {
 		switch (option) {
 		case "Africa":
 			return Region.Africa;

@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
@@ -15,6 +14,7 @@ import enums.City;
 import enums.Country;
 import enums.Region;
 import pages.locators.HomePageLocators;
+import testcases.BaseTest;
 
 public class HomePage extends BasePage {
 
@@ -22,77 +22,82 @@ public class HomePage extends BasePage {
 	private static final int MIN_CRUISE_LENGTH = 6;
 	private static final String END_SEARCH_DATE = "1 июнь";
 
-	public HomePage(WebDriver driver) {
-		super(driver);
+	public HomePage() {
 		PageFactory.initElements(factory, this.home);
+		BaseTest.getDriver().get("https://www.cruclub.ru/");
+		try {
+			Thread.sleep(1500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
-	public SearchPage searchCruises(City initialPort) {
-		return searchCruises(Region.AnyRegion, Country.SkipCountry, initialPort, MIN_CRUISE_LENGTH, END_SEARCH_DATE);
+	public SearchPage searchCruises(City departurePort) {
+		return findCruise(Region.AnyRegion, Country.SkipCountry, departurePort, MIN_CRUISE_LENGTH, END_SEARCH_DATE);
 	}
 
-	public SearchPage searchCruises(City initialPort, String date) {
-		return searchCruises(Region.AnyRegion, Country.SkipCountry, initialPort, MIN_CRUISE_LENGTH, date);
+	public SearchPage searchCruises(City departurePort, String date) {
+		return findCruise(Region.AnyRegion, Country.SkipCountry, departurePort, MIN_CRUISE_LENGTH, date);
 	}
 
-	public SearchPage searchCruises(City initialPort, int minCruiseLength) {
-		return searchCruises(Region.AnyRegion, Country.SkipCountry, initialPort, minCruiseLength, END_SEARCH_DATE);
+	public SearchPage searchCruises(City departurePort, int minCruiseLength) {
+		return findCruise(Region.AnyRegion, Country.SkipCountry, departurePort, minCruiseLength, END_SEARCH_DATE);
 	}
 
-	public SearchPage searchCruises(City initialPort, int minCruiseLength, String date) {
-		return searchCruises(Region.AnyRegion, Country.SkipCountry, initialPort, minCruiseLength, date);
+	public SearchPage searchCruises(City departurePort, int minCruiseLength, String date) {
+		return findCruise(Region.AnyRegion, Country.SkipCountry, departurePort, minCruiseLength, date);
 	}
 
 	public SearchPage searchCruises(Region region, int minCruiseLength) {
-		return searchCruises(region, Country.AnyCountry, City.AnyCity, minCruiseLength, END_SEARCH_DATE);
+		return findCruise(region, Country.AnyCountry, City.AnyCity, minCruiseLength, END_SEARCH_DATE);
 	}
 
 	public SearchPage searchCruises(Region region, int minCruiseLength, String date) {
-		return searchCruises(region, Country.AnyCountry, City.AnyCity, minCruiseLength, date);
+		return findCruise(region, Country.AnyCountry, City.AnyCity, minCruiseLength, date);
 	}
 
 	public SearchPage searchCruises(Region region, Country country) {
-		return searchCruises(region, country, City.AnyCity, MIN_CRUISE_LENGTH, END_SEARCH_DATE);
+		return findCruise(region, country, City.AnyCity, MIN_CRUISE_LENGTH, END_SEARCH_DATE);
 	}
 
 	public SearchPage searchCruises(Region region, Country country, String date) {
-		return searchCruises(region, country, City.AnyCity, MIN_CRUISE_LENGTH, date);
+		return findCruise(region, country, City.AnyCity, MIN_CRUISE_LENGTH, date);
 	}
 
-	public SearchPage searchCruises(Region region, City initialPort) {
-		return searchCruises(region, Country.AnyCountry, initialPort, MIN_CRUISE_LENGTH, END_SEARCH_DATE);
+	public SearchPage searchCruises(Region region, City departurePort) {
+		return findCruise(region, Country.AnyCountry, departurePort, MIN_CRUISE_LENGTH, END_SEARCH_DATE);
 	}
 
-	public SearchPage searchCruises(Region region, City initialPort, String date) {
-		return searchCruises(region, Country.AnyCountry, initialPort, MIN_CRUISE_LENGTH, date);
+	public SearchPage searchCruises(Region region, City departurePort, String date) {
+		return findCruise(region, Country.AnyCountry, departurePort, MIN_CRUISE_LENGTH, date);
 	}
 
-	public SearchPage searchCruises(Region region, City initialPort, int minCruiseLength) {
-		return searchCruises(region, Country.AnyCountry, initialPort, minCruiseLength, END_SEARCH_DATE);
+	public SearchPage searchCruises(Region region, City departurePort, int minCruiseLength) {
+		return findCruise(region, Country.AnyCountry, departurePort, minCruiseLength, END_SEARCH_DATE);
 	}
 
-	public SearchPage searchCruises(Region region, City initialPort, int minCruiseLength, String date) {
-		return searchCruises(region, Country.AnyCountry, initialPort, minCruiseLength, date);
+	public SearchPage searchCruises(Region region, City departurePort, int minCruiseLength, String date) {
+		return findCruise(region, Country.AnyCountry, departurePort, minCruiseLength, date);
 	}
 
-	public SearchPage searchCruises(Region region, Country country, City initialPort) {
-		return searchCruises(region, country, initialPort, MIN_CRUISE_LENGTH, END_SEARCH_DATE);
+	public SearchPage searchCruises(Region region, Country country, City departurePort) {
+		return findCruise(region, country, departurePort, MIN_CRUISE_LENGTH, END_SEARCH_DATE);
 	}
 
-	public SearchPage searchCruises(Region region, Country country, City initialPort, String date) {
-		return searchCruises(region, country, initialPort, MIN_CRUISE_LENGTH, date);
+	public SearchPage searchCruises(Region region, Country country, City departurePort, String date) {
+		return findCruise(region, country, departurePort, MIN_CRUISE_LENGTH, date);
 	}
 
-	public SearchPage searchCruises(Region region, Country country, City initialPort, int minCruiseLength,
+	public SearchPage findCruise(Region region, Country country, City departurePort, int minCruiseLength,
 			String date) {
 		chooseRegion(region);
 		chooseCountry(country);
-		chooseInitialPort(initialPort);
+		chooseInitialPort(departurePort);
 		chooseEndDate(date);
 		chooseMinLength(minCruiseLength);
 		checkNumberOfCruises();
 		home.submitCruiseOptionsButton.click();
-		return new SearchPage(driver);
+		return new SearchPage();
 	}
 
 	private void checkNumberOfCruises() {
@@ -172,10 +177,10 @@ public class HomePage extends BasePage {
 		}
 	}
 
-	private void chooseInitialPort(City initialPort) {
-		wait.until(ExpectedConditions.elementToBeClickable(home.initialPortLink));
-		home.initialPortLink.click();
-		switch (initialPort) {
+	private void chooseInitialPort(City departurePort) {
+		wait.until(ExpectedConditions.elementToBeClickable(home.depaturePortLink));
+		home.depaturePortLink.click();
+		switch (departurePort) {
 		case Rome:
 			wait.until(ExpectedConditions.elementToBeClickable(home.Rome));
 			home.Rome.click();
@@ -185,7 +190,7 @@ public class HomePage extends BasePage {
 			home.Genoa.click();
 			break;
 		case Savona:
-			wait.until(ExpectedConditions.elementToBeClickable(home.Savona));
+			wait.until(ExpectedConditions.elementToBeClickable(home.Rome));
 			home.Savona.click();
 			break;
 		case Marseille:
@@ -202,7 +207,7 @@ public class HomePage extends BasePage {
 	private void chooseMinLength(int minCruiseLength) {
 		home.numberOfDaysLink.click();
 		home.daySlider.click();
-		Actions action = new Actions(driver);
+		Actions action = new Actions(BaseTest.getDriver());
 		for (int i = 0; i < minCruiseLength; i++) {
 			action.sendKeys(Keys.ARROW_RIGHT).perform();
 		}

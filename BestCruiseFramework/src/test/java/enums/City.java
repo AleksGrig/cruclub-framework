@@ -4,7 +4,7 @@ public enum City
 {
 	AnyCity, Genoa, Marseille, Rome, Savona;
 
-	public static City parseString(String option) {
+	public static City parseCity(String option) {
 		switch (option) {
 		case "Genoa":
 			return City.Genoa;

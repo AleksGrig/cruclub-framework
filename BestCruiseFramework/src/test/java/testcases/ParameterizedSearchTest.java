@@ -15,17 +15,14 @@ import utilities.DataProviders;
 public class ParameterizedSearchTest extends BaseTest {
 
 	@Test(dataProviderClass = DataProviders.class, dataProvider = "dp")
-	public void parameterizedSearchTest(HashMap<String, String> data) throws InterruptedException {
+	public void parameterizedSearchTest(HashMap<String, String> data) {
 		checkRunmode(data.get("runmode"));
-		getDriver().get("https://www.cruclub.ru/");
-		Thread.sleep(1500);
-
 		double priceLimit = Double.parseDouble(data.get("priceLimit"));
-		HomePage home = new HomePage(getDriver());
-		if (home.searchCruises(Region.parseString(data.get("region")), Country.parseString(data.get("country")),
-				City.parseString(data.get("initialPort")), (int) Double.parseDouble(data.get("minCruiseLength")),
-				data.get("date")).sort(By.Price).isCheaper(priceLimit)) {
-			Assert.fail("There is cruise cheaper than " + priceLimit);
+		HomePage home = new HomePage();
+		if (home.findCruise(Region.parseRegion(data.get("region")), Country.parseCountry(data.get("country")),
+				City.parseCity(data.get("departurePort")), (int) Double.parseDouble(data.get("minCruiseLength")),
+				data.get("date")).sort(By.Price).cheaperThan(priceLimit)) {
+			Assert.fail();
 		}
 	}
 }

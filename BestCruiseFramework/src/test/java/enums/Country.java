@@ -7,7 +7,7 @@ public enum Country
 	GreatBritain,
 	Israel;
 
-	public static Country parseString(String option) {
+	public static Country parseCountry(String option) {
 		switch (option) {
 		case "SkipCountry":
 			return Country.SkipCountry;

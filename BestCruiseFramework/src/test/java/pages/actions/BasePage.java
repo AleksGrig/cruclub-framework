@@ -1,18 +1,17 @@
 package pages.actions;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import testcases.BaseTest;
+
 class BasePage {
 
-	WebDriver driver;
 	WebDriverWait wait;
 	AjaxElementLocatorFactory factory;
 
-	BasePage(WebDriver driver) {
-		this.driver = driver;
-		factory = new AjaxElementLocatorFactory(driver, 10);
-		wait = new WebDriverWait(driver, 5);
+	BasePage() {
+		factory = new AjaxElementLocatorFactory(BaseTest.getDriver(), 10);
+		wait = new WebDriverWait(BaseTest.getDriver(), 5);
 	}
 }
