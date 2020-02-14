@@ -5,13 +5,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import testcases.BaseTest;
 
-class BasePage {
+abstract class BasePage {
 
 	WebDriverWait wait;
 	AjaxElementLocatorFactory factory;
 
 	BasePage() {
 		factory = new AjaxElementLocatorFactory(BaseTest.getDriver(), 10);
-		wait = new WebDriverWait(BaseTest.getDriver(), 5);
+		wait = new WebDriverWait(BaseTest.getDriver(), 10);
 	}
 }

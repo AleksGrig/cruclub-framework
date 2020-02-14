@@ -10,6 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.SkipException;
 
+import builders.Cruise;
 import enums.City;
 import enums.Country;
 import enums.Region;
@@ -18,83 +19,23 @@ import testcases.BaseTest;
 
 public class HomePage extends BasePage {
 
-	private pages.locators.HomePageLocators home = new HomePageLocators();
-	private static final int MIN_CRUISE_LENGTH = 6;
-	private static final String END_SEARCH_DATE = "1 июнь";
+	private HomePageLocators home = new HomePageLocators();
 
 	public HomePage() {
 		PageFactory.initElements(factory, this.home);
 		BaseTest.getDriver().get("https://www.cruclub.ru/");
-		try {
-			Thread.sleep(1500);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 	}
 
-	public SearchPage searchCruises(City departurePort) {
-		return findCruise(Region.AnyRegion, Country.SkipCountry, departurePort, MIN_CRUISE_LENGTH, END_SEARCH_DATE);
+	public SearchPage findCruise() {
+		return findCruise(Cruise.getBuilder().build());
 	}
 
-	public SearchPage searchCruises(City departurePort, String date) {
-		return findCruise(Region.AnyRegion, Country.SkipCountry, departurePort, MIN_CRUISE_LENGTH, date);
-	}
-
-	public SearchPage searchCruises(City departurePort, int minCruiseLength) {
-		return findCruise(Region.AnyRegion, Country.SkipCountry, departurePort, minCruiseLength, END_SEARCH_DATE);
-	}
-
-	public SearchPage searchCruises(City departurePort, int minCruiseLength, String date) {
-		return findCruise(Region.AnyRegion, Country.SkipCountry, departurePort, minCruiseLength, date);
-	}
-
-	public SearchPage searchCruises(Region region, int minCruiseLength) {
-		return findCruise(region, Country.AnyCountry, City.AnyCity, minCruiseLength, END_SEARCH_DATE);
-	}
-
-	public SearchPage searchCruises(Region region, int minCruiseLength, String date) {
-		return findCruise(region, Country.AnyCountry, City.AnyCity, minCruiseLength, date);
-	}
-
-	public SearchPage searchCruises(Region region, Country country) {
-		return findCruise(region, country, City.AnyCity, MIN_CRUISE_LENGTH, END_SEARCH_DATE);
-	}
-
-	public SearchPage searchCruises(Region region, Country country, String date) {
-		return findCruise(region, country, City.AnyCity, MIN_CRUISE_LENGTH, date);
-	}
-
-	public SearchPage searchCruises(Region region, City departurePort) {
-		return findCruise(region, Country.AnyCountry, departurePort, MIN_CRUISE_LENGTH, END_SEARCH_DATE);
-	}
-
-	public SearchPage searchCruises(Region region, City departurePort, String date) {
-		return findCruise(region, Country.AnyCountry, departurePort, MIN_CRUISE_LENGTH, date);
-	}
-
-	public SearchPage searchCruises(Region region, City departurePort, int minCruiseLength) {
-		return findCruise(region, Country.AnyCountry, departurePort, minCruiseLength, END_SEARCH_DATE);
-	}
-
-	public SearchPage searchCruises(Region region, City departurePort, int minCruiseLength, String date) {
-		return findCruise(region, Country.AnyCountry, departurePort, minCruiseLength, date);
-	}
-
-	public SearchPage searchCruises(Region region, Country country, City departurePort) {
-		return findCruise(region, country, departurePort, MIN_CRUISE_LENGTH, END_SEARCH_DATE);
-	}
-
-	public SearchPage searchCruises(Region region, Country country, City departurePort, String date) {
-		return findCruise(region, country, departurePort, MIN_CRUISE_LENGTH, date);
-	}
-
-	public SearchPage findCruise(Region region, Country country, City departurePort, int minCruiseLength,
-			String date) {
-		chooseRegion(region);
-		chooseCountry(country);
-		chooseInitialPort(departurePort);
-		chooseEndDate(date);
-		chooseMinLength(minCruiseLength);
+	public SearchPage findCruise(Cruise cruise) {
+		chooseRegion(cruise.getRegion());
+		chooseCountry(cruise.getCountry());
+		chooseDeparturePort(cruise.getDeparturePort());
+		chooseEndDate(cruise.getDate());
+		chooseMinLength(cruise.getMinCruiseLength());
 		checkNumberOfCruises();
 		home.submitCruiseOptionsButton.click();
 		return new SearchPage();
@@ -177,7 +118,13 @@ public class HomePage extends BasePage {
 		}
 	}
 
-	private void chooseInitialPort(City departurePort) {
+	private void chooseDeparturePort(City departurePort) {
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
 		wait.until(ExpectedConditions.elementToBeClickable(home.depaturePortLink));
 		home.depaturePortLink.click();
 		switch (departurePort) {
