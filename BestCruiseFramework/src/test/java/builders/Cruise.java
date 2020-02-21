@@ -10,7 +10,7 @@ public class Cruise {
 	private Country country;
 	private City departurePort;
 	private int minCruiseLength;
-	private String date;
+	private String beforeDate;
 
 	private Cruise() {
 	}
@@ -32,7 +32,7 @@ public class Cruise {
 	}
 
 	public String getDate() {
-		return date;
+		return beforeDate;
 	}
 
 	private void setRegion(Region region) {
@@ -52,7 +52,7 @@ public class Cruise {
 	}
 
 	private void setDate(String date) {
-		this.date = date;
+		this.beforeDate = date;
 	}
 
 	public static CruiseBuilder getBuilder() {
@@ -61,20 +61,20 @@ public class Cruise {
 
 	public static class CruiseBuilder {
 
-		private Region region = Region.AnyRegion;
-		private Country country = Country.SkipCountry;
+		private Region destinationRegion = Region.AnyRegion;
+		private Country destinationCountry = Country.SkipCountry;
 		private City departurePort = City.AnyCity;
 		private int minCruiseLength = 7;
-		private String date = "1 июнь";
+		private String beforeDate = "1 июнь";
 		private Cruise cruise;
 
-		public CruiseBuilder withRegion(Region region) {
-			this.region = region;
+		public CruiseBuilder withRegion(Region destinationRegion) {
+			this.destinationRegion = destinationRegion;
 			return this;
 		}
 
-		public CruiseBuilder withCountry(Country country) {
-			this.country = country;
+		public CruiseBuilder withCountry(Country destinationCountry) {
+			this.destinationCountry = destinationCountry;
 			return this;
 		}
 
@@ -88,19 +88,19 @@ public class Cruise {
 			return this;
 		}
 
-		public CruiseBuilder withDate(String date) {
-			this.date = date;
+		public CruiseBuilder withDate(String beforeDate) {
+			this.beforeDate = beforeDate;
 			return this;
 		}
 
 		public Cruise build() {
 			if (this.cruise == null) {
 				cruise = new Cruise();
-				cruise.setRegion(region);
-				cruise.setCountry(country);
+				cruise.setRegion(destinationRegion);
+				cruise.setCountry(destinationCountry);
 				cruise.setDeparturePort(departurePort);
 				cruise.setMinCruiseLength(minCruiseLength);
-				cruise.setDate(date);
+				cruise.setDate(beforeDate);
 			}
 			return cruise;
 		}

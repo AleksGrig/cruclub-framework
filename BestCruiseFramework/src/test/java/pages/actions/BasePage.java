@@ -11,7 +11,7 @@ abstract class BasePage {
 	AjaxElementLocatorFactory factory;
 
 	BasePage() {
-		factory = new AjaxElementLocatorFactory(BaseTest.getDriver(), 10);
-		wait = new WebDriverWait(BaseTest.getDriver(), 10);
+		factory = new AjaxElementLocatorFactory(BaseTest.getDriver(), 15);
+		wait = new WebDriverWait(BaseTest.getDriver(), 15);
 	}
 }

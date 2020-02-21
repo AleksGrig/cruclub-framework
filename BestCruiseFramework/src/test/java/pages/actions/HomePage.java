@@ -34,7 +34,7 @@ public class HomePage extends BasePage {
 		chooseRegion(cruise.getRegion());
 		chooseCountry(cruise.getCountry());
 		chooseDeparturePort(cruise.getDeparturePort());
-		chooseEndDate(cruise.getDate());
+		chooseBeforeDate(cruise.getDate());
 		chooseMinLength(cruise.getMinCruiseLength());
 		checkNumberOfCruises();
 		home.submitCruiseOptionsButton.click();
@@ -52,8 +52,8 @@ public class HomePage extends BasePage {
 		}
 	}
 
-	private void chooseEndDate(String date) {
-		String[] dayAndMonth = date.split(" ");
+	private void chooseBeforeDate(String beforeDate) {
+		String[] dayAndMonth = beforeDate.split(" ");
 		home.calendarLink.click();
 		chooseMonth(dayAndMonth[1]);
 		chooseDay(dayAndMonth[0]);
