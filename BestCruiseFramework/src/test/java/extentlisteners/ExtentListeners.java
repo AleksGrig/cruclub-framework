@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
@@ -48,21 +47,21 @@ public class ExtentListeners implements ITestListener {
 
 	@Override
 	public void onTestFailure(ITestResult result) {
-		WebDriver driver = BaseTest.getDriver();
-		String excepionMessage = Arrays.toString(result.getThrowable().getStackTrace());
-		testReport.get()
-				.fail("<details>" + "<summary>" + "<b>" + "<font color=" + "red>" + "Exception Occured:Click to see"
-						+ "</font>" + "</b >" + "</summary>" + excepionMessage.replaceAll(",", "<br>") + "</details>"
-						+ " \n");
-
 		try {
-			ExtentManager.captureScreenshot(driver);
+			ExtentManager.captureScreenshot(BaseTest.getDriver());
 			testReport.get().fail("Screenshot",
 					MediaEntityBuilder.createScreenCaptureFromPath(ExtentManager.getScreenshotName()).build());
 			testReport.get().fail("<a href='" + BaseTest.getDriver().getCurrentUrl() + "'>Screenshot Link</a>");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
+		String excepionMessage = Arrays.toString(result.getThrowable().getStackTrace());
+		testReport.get()
+				.fail("<details>" + "<summary>" + "<b>" + "<font color=" + "red>" + "Exception Occured:Click to see"
+						+ "</font>" + "</b >" + "</summary>" + excepionMessage.replaceAll(",", "<br>") + "</details>"
+						+ " \n");
+
 		String failureLogg = "TEST CASE FAILED";
 		Markup m = MarkupHelper.createLabel(failureLogg, ExtentColor.RED);
 		testReport.get().log(Status.FAIL, m);
