@@ -27,7 +27,7 @@ public class ExtentListeners implements ITestListener {
 	public static ThreadLocal<ExtentTest> testReport = new ThreadLocal<ExtentTest>();
 
 	@Override
-	public void onTestStart(ITestResult result) {
+	public synchronized void onTestStart(ITestResult result) {
 		@SuppressWarnings("unchecked")
 		HashMap<String, String> data = (HashMap<String, String>) result.getParameters()[0];
 
@@ -37,7 +37,7 @@ public class ExtentListeners implements ITestListener {
 	}
 
 	@Override
-	public void onTestSuccess(ITestResult result) {
+	public synchronized void onTestSuccess(ITestResult result) {
 		String methodName = result.getMethod().getMethodName();
 		String logText = "<b>" + "TEST CASE:- " + methodName.toUpperCase() + " PASSED" + "</b>";
 		testReport.get().pass("<a href='" + BaseTest.getDriver().getCurrentUrl() + "'>Cruises found</a>");
@@ -46,7 +46,7 @@ public class ExtentListeners implements ITestListener {
 	}
 
 	@Override
-	public void onTestFailure(ITestResult result) {
+	public synchronized void onTestFailure(ITestResult result) {
 		try {
 			ExtentManager.captureScreenshot(BaseTest.getDriver());
 			testReport.get().fail("Screenshot",
@@ -68,7 +68,7 @@ public class ExtentListeners implements ITestListener {
 	}
 
 	@Override
-	public void onTestSkipped(ITestResult result) {
+	public synchronized void onTestSkipped(ITestResult result) {
 		String methodName = result.getMethod().getMethodName();
 		testReport.get().skip(result.getThrowable().getMessage());
 		String logText = "<b>" + "Test Case:- " + methodName + " Skipped, message: " + "</b>";
@@ -87,7 +87,7 @@ public class ExtentListeners implements ITestListener {
 	}
 
 	@Override
-	public void onFinish(ITestContext context) {
+	public synchronized void onFinish(ITestContext context) {
 		if (extent != null) {
 			extent.flush();
 		}

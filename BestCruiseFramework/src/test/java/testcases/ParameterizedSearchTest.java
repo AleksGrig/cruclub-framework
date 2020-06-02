@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 
 import builders.Cruise;
 import enums.By;
-import enums.City;
+import enums.Port;
 import enums.Country;
 import enums.Region;
 import pages.actions.HomePage;
@@ -17,16 +17,16 @@ public class ParameterizedSearchTest extends BaseTest {
 
 	@Test(dataProviderClass = DataProviders.class, dataProvider = "dp")
 	public void parameterizedSearchTest(HashMap<String, String> data) {
-		checkRunmode(data.get("runmode"));
-		double priceLimit = Double.parseDouble(data.get("priceLimit"));
-		HomePage home = new HomePage();
 		Cruise cruise = Cruise.getBuilder().withRegion(Region.valueOf(data.get("destinationRegion")))
 				.withCountry(Country.valueOf(data.get("destinationCountry")))
-				.withCity(City.valueOf(data.get("departurePort")))
+				.withInitialPort(Port.valueOf(data.get("departurePort")))
 				.withMinCruiseLength((int) Double.parseDouble(data.get("minCruiseLength")))
 				.withDate(data.get("beforeDate"))
 				.build();
-		if (home.findCruise(cruise).sort(By.Price).cheaperThan(priceLimit)) {
+		double priceLimit = Double.parseDouble(data.get("priceLimit"));
+		HomePage home = new HomePage();
+		
+		if (home.findCruise(cruise).sort(By.Price).isCheaperThan(priceLimit)) {
 			Assert.fail();
 		}
 	}

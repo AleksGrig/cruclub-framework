@@ -3,23 +3,16 @@ package testcases;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.SkipException;
-import org.testng.annotations.AfterTest;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.BeforeTest;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public abstract class BaseTest {
 
 	private static ThreadLocal<WebDriver> localDriver = new ThreadLocal<>();
-
-	void checkRunmode(String runmode) {
-		if (!runmode.equalsIgnoreCase("Y")) {
-			throw new SkipException("Runmode set to N");
-		}
-	}
 
 	public static WebDriver getDriver() {
 		return localDriver.get();
@@ -31,15 +24,15 @@ public abstract class BaseTest {
 		WebDriverManager.firefoxdriver().setup();
 	}
 
-	@BeforeTest
+	@BeforeMethod
 	public void setUp() {
-		WebDriver driver = new ChromeDriver();
+		WebDriver driver = new FirefoxDriver();
 		localDriver.set(driver);
 		localDriver.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		localDriver.get().manage().window().maximize();
 	}
 
-	@AfterTest
+	@AfterMethod
 	public void tearDown() {
 		localDriver.get().quit();
 	}

@@ -5,7 +5,7 @@
 		<listener class-name="extentlisteners.ExtentListeners"></listener>
 	</listeners>
 	
-	<test thread-count="1" name="SingleCruiseTest">
+	<test thread-count="3" name="SingleCruiseTest">
 		<classes>
 			<class name="testcases.SingleCruiseTest"></class>
 		</classes>

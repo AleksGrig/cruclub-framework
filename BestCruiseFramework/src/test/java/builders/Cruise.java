@@ -1,6 +1,6 @@
 package builders;
 
-import enums.City;
+import enums.Port;
 import enums.Country;
 import enums.Region;
 
@@ -8,7 +8,7 @@ public class Cruise {
 
 	private Region region;
 	private Country country;
-	private City departurePort;
+	private Port departurePort;
 	private int minCruiseLength;
 	private String beforeDate;
 
@@ -23,7 +23,7 @@ public class Cruise {
 		return country;
 	}
 
-	public City getDeparturePort() {
+	public Port getDeparturePort() {
 		return departurePort;
 	}
 
@@ -43,7 +43,7 @@ public class Cruise {
 		this.country = country;
 	}
 
-	private void setDeparturePort(City departurePort) {
+	private void setDeparturePort(Port departurePort) {
 		this.departurePort = departurePort;
 	}
 
@@ -63,7 +63,7 @@ public class Cruise {
 
 		private Region destinationRegion = Region.AnyRegion;
 		private Country destinationCountry = Country.SkipCountry;
-		private City departurePort = City.AnyCity;
+		private Port departurePort = Port.AnyCity;
 		private int minCruiseLength = 7;
 		private String beforeDate = "1 июнь";
 		private Cruise cruise;
@@ -78,7 +78,7 @@ public class Cruise {
 			return this;
 		}
 
-		public CruiseBuilder withCity(City departurePort) {
+		public CruiseBuilder withInitialPort(Port departurePort) {
 			this.departurePort = departurePort;
 			return this;
 		}

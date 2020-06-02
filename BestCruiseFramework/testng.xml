@@ -5,13 +5,13 @@
 		<listener class-name="extentlisteners.ExtentListeners"></listener>
 	</listeners>
 	
-	<test thread-count="1" name="SingleCruiseTest">
+	<test thread-count="3" name="SingleCruiseTest">
 		<classes>
 			<class name="testcases.SingleCruiseTest"></class>
 		</classes>
 	</test> <!-- Test -->
 	
-	<test thread-count="1" name="ParameterizedSearchTest">
+	<test thread-count="3" name="ParameterizedSearchTest">
 		<classes>
 			<class name="testcases.ParameterizedSearchTest"></class>
 		</classes>

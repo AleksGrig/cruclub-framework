@@ -1,17 +1,24 @@
 package pages.actions;
 
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import enums.By;
 import pages.locators.SearchPageLocators;
+import testcases.BaseTest;
 
-public class SearchPage extends BasePage {
+public class SearchPage {
 
 	private SearchPageLocators search = new SearchPageLocators();
+	private WebDriverWait wait;
+	private AjaxElementLocatorFactory factory;
 
 	public SearchPage() {
-		PageFactory.initElements(factory, this.search);
+		factory = new AjaxElementLocatorFactory(BaseTest.getDriver(), 15);
+		wait = new WebDriverWait(BaseTest.getDriver(), 15);
+		PageFactory.initElements(factory, search);
 	}
 
 	public SearchPage sort(By by) {
@@ -27,7 +34,7 @@ public class SearchPage extends BasePage {
 		return this;
 	}
 
-	public boolean cheaperThan(double priceLimit) {
+	public boolean isCheaperThan(double priceLimit) {
 		double price = Double.parseDouble(search.firstPriceTag.getText().split(" ")[0]);
 		if (price < priceLimit) {
 			return true;

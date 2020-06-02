@@ -8,16 +8,19 @@ import org.testng.annotations.Test;
 
 import utilities.DataProviders;
 
-public class SingleCruiseTest extends BaseTest {
-
+public class SingleCruiseTest extends BaseTest{
 	@Test(dataProviderClass = DataProviders.class, dataProvider = "dp")
 	public void singleCruiseTest(HashMap<String, String> data) {
-		checkRunmode(data.get("runmode"));
 		getDriver().get(data.get("link"));
-		double price = Double.parseDouble(getDriver().findElement(By.id(data.get("priceTag"))).getText().split(" ")[0]);
+		double cruisePrice = getCruisePrice();
 		double priceLimit = Double.parseDouble(data.get("priceLimit"));
-		if (price < priceLimit) {
+		if (cruisePrice < priceLimit) {
 			Assert.fail();
 		}
+	}
+	
+	private double getCruisePrice() {
+		return Double.parseDouble(
+				getDriver().findElement(By.id("ctl00_Content_ctlOffer_ctlPrice_lblPrice")).getText().split(" ")[0]);
 	}
 }

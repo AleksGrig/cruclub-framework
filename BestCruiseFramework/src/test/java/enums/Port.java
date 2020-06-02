@@ -1,6 +1,6 @@
 package enums;
 
-public enum City
+public enum Port
 {
 	AnyCity, Genoa, Marseille, Rome, Savona;
 }

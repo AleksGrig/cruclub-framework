@@ -7,22 +7,28 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.SkipException;
 
 import builders.Cruise;
-import enums.City;
 import enums.Country;
+import enums.Port;
 import enums.Region;
 import pages.locators.HomePageLocators;
 import testcases.BaseTest;
 
-public class HomePage extends BasePage {
+public class HomePage {
 
-	private HomePageLocators home = new HomePageLocators();
+	private HomePageLocators home = new HomePageLocators();	
+	private WebDriverWait wait;
+	private AjaxElementLocatorFactory factory;
 
 	public HomePage() {
-		PageFactory.initElements(factory, this.home);
+		factory = new AjaxElementLocatorFactory(BaseTest.getDriver(), 15);
+		wait = new WebDriverWait(BaseTest.getDriver(), 15);
+		PageFactory.initElements(factory, home);
 		BaseTest.getDriver().get("https://www.cruclub.ru/");
 	}
 
@@ -42,11 +48,7 @@ public class HomePage extends BasePage {
 	}
 
 	private void checkNumberOfCruises() {
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		// Thread.sleep(500);
 		if (home.numberOfCruises.getText().strip().equalsIgnoreCase("0")) {
 			throw new SkipException("No Cruises found!");
 		}
@@ -61,17 +63,10 @@ public class HomePage extends BasePage {
 	}
 
 	private void chooseDay(String date) {
-		List<WebElement> dates = home.dateBlock.findElements(By.tagName("td"));
-
-		for (int i = 0; i < dates.size(); i++) {
-			WebElement element = dates.get(i);
-			if (element.getText().equals(date)) {
-				if (element.getAttribute("class").contains("available")) {
-					element.click();
-					break;
-				}
-			}
-		}
+		List<WebElement> dates = home.dateBlock.findElements(By.tagName("td"));		
+		dates.stream()
+			.filter(e -> e.getText().equals(date) && e.getAttribute("class").contains("available"))
+			.findFirst().ifPresent(WebElement::click);
 	}
 
 	private void chooseMonth(String month) {
@@ -118,35 +113,25 @@ public class HomePage extends BasePage {
 		}
 	}
 
-	private void chooseDeparturePort(City departurePort) {
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
+	private void chooseDeparturePort(Port departurePort) {
 		wait.until(ExpectedConditions.elementToBeClickable(home.depaturePortLink));
 		home.depaturePortLink.click();
+		
 		switch (departurePort) {
 		case Rome:
-			wait.until(ExpectedConditions.elementToBeClickable(home.Rome));
 			home.Rome.click();
 			break;
 		case Genoa:
-			wait.until(ExpectedConditions.elementToBeClickable(home.Genoa));
 			home.Genoa.click();
 			break;
 		case Savona:
-			wait.until(ExpectedConditions.elementToBeClickable(home.Rome));
 			home.Savona.click();
 			break;
 		case Marseille:
-			wait.until(ExpectedConditions.elementToBeClickable(home.Marseille));
 			home.Marseille.click();
 			break;
 		case AnyCity:
 		default:
-			wait.until(ExpectedConditions.elementToBeClickable(home.anyCity));
 			home.anyCity.click();
 		}
 	}
