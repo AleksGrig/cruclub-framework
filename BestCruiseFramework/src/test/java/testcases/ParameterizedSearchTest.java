@@ -6,6 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import builders.Cruise;
+import enums.By;
 import enums.Country;
 import enums.Port;
 import enums.Region;
@@ -25,7 +26,7 @@ public class ParameterizedSearchTest extends BaseTest {
 				.build();
 		double priceLimit = Double.parseDouble(data.get("priceLimit"));
 		
-		if (HomePage.load().findCruise(cruise).isCheaperThan(priceLimit)) {
+		if (HomePage.load().findCruise(cruise).sort(By.Price).isFirstCheaperThan(priceLimit)) {
 			Assert.fail();
 		}
 	}

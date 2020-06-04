@@ -34,8 +34,7 @@ public class SearchPage {
 		return this;
 	}
 
-	public boolean isCheaperThan(double priceLimit) {
-		sort(By.Price);
+	public boolean isFirstCheaperThan(double priceLimit) {
 		double price = Double.parseDouble(search.firstPriceTag.getText().split(" ")[0]);
 		if (price < priceLimit) {
 			return true;
