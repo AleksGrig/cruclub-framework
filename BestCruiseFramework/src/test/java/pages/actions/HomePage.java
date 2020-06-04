@@ -31,6 +31,10 @@ public class HomePage {
 		PageFactory.initElements(factory, home);
 		BaseTest.getDriver().get("https://www.cruclub.ru/");
 	}
+	
+	public static HomePage load() {
+		return new HomePage();
+	}
 
 	public SearchPage findCruise() {
 		return findCruise(Cruise.getBuilder().build());
@@ -65,8 +69,10 @@ public class HomePage {
 	private void chooseDay(String date) {
 		List<WebElement> dates = home.dateBlock.findElements(By.tagName("td"));		
 		dates.stream()
-			.filter(e -> e.getText().equals(date) && e.getAttribute("class").contains("available"))
-			.findFirst().ifPresent(WebElement::click);
+			.filter(e -> e.getText().equals(date))
+			.filter(e -> e.getAttribute("class").contains("available"))
+			.findFirst()
+			.ifPresent(WebElement::click);
 	}
 
 	private void chooseMonth(String month) {

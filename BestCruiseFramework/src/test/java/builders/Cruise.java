@@ -68,12 +68,12 @@ public class Cruise {
 		private String beforeDate = "1 июнь";
 		private Cruise cruise;
 
-		public CruiseBuilder withRegion(Region destinationRegion) {
+		public CruiseBuilder withDestinationRegion(Region destinationRegion) {
 			this.destinationRegion = destinationRegion;
 			return this;
 		}
 
-		public CruiseBuilder withCountry(Country destinationCountry) {
+		public CruiseBuilder withDestinationCountry(Country destinationCountry) {
 			this.destinationCountry = destinationCountry;
 			return this;
 		}
