@@ -8,8 +8,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.SkipException;
 
 import builders.Cruise;
@@ -21,14 +19,12 @@ import testcases.BaseTest;
 
 public class HomePage {
 
-	private HomePageLocators home = new HomePageLocators();	
-	private WebDriverWait wait;
+	private HomePageLocators homeLocators = new HomePageLocators();	
 	private AjaxElementLocatorFactory factory;
 
 	public HomePage() {
 		factory = new AjaxElementLocatorFactory(BaseTest.getDriver(), 15);
-		wait = new WebDriverWait(BaseTest.getDriver(), 15);
-		PageFactory.initElements(factory, home);
+		PageFactory.initElements(factory, homeLocators);
 		BaseTest.getDriver().get("https://www.cruclub.ru/");
 	}
 	
@@ -36,38 +32,37 @@ public class HomePage {
 		return new HomePage();
 	}
 
-	public SearchPage findCruise() {
-		return findCruise(Cruise.getBuilder().build());
+	public SearchPage findCruises() {
+		return findCruises(Cruise.getBuilder().build());
 	}
 
-	public SearchPage findCruise(Cruise cruise) {
+	public SearchPage findCruises(Cruise cruise) {
 		chooseRegion(cruise.getRegion());
 		chooseCountry(cruise.getCountry());
 		chooseDeparturePort(cruise.getDeparturePort());
 		chooseBeforeDate(cruise.getDate());
 		chooseMinLength(cruise.getMinCruiseLength());
 		checkNumberOfCruises();
-		home.submitCruiseOptionsButton.click();
+		homeLocators.submitCruiseOptionsButton.click();
 		return new SearchPage();
 	}
 
 	private void checkNumberOfCruises() {
-		// Thread.sleep(500);
-		if (home.numberOfCruises.getText().strip().equalsIgnoreCase("0")) {
+		if (homeLocators.numberOfCruises.getText().strip().equalsIgnoreCase("0")) {
 			throw new SkipException("No Cruises found!");
 		}
 	}
 
 	private void chooseBeforeDate(String beforeDate) {
 		String[] dayAndMonth = beforeDate.split(" ");
-		home.calendarLink.click();
+		homeLocators.calendarLink.click();
 		chooseMonth(dayAndMonth[1]);
 		chooseDay(dayAndMonth[0]);
-		home.applyCalendar.click();
+		homeLocators.applyCalendar.click();
 	}
 
 	private void chooseDay(String date) {
-		List<WebElement> dates = home.dateBlock.findElements(By.tagName("td"));		
+		List<WebElement> dates = homeLocators.dateBlock.findElements(By.tagName("td"));		
 		dates.stream()
 			.filter(e -> e.getText().equals(date))
 			.filter(e -> e.getAttribute("class").contains("available"))
@@ -76,79 +71,33 @@ public class HomePage {
 	}
 
 	private void chooseMonth(String month) {
-		while (!home.currentMonth.getText().contains(month)) {
-			home.next.click();
+		while (!homeLocators.currentMonth.getText().contains(month)) {
+			homeLocators.next.click();
 		}
 	}
 
 	private void chooseRegion(Region region) {
-		home.regionLink.click();
-		switch (region) {
-		case Africa:
-			home.Africa.click();
-			break;
-		case BritishIslands:
-			home.BritishIslands.click();
-			break;
-		case Mediterranean:
-			home.Mediterrenean.click();
-			break;
-		case NearEast:
-			home.NearEast.click();
-			break;
-		case AnyRegion:
-		default:
-			home.anyRegion.click();
-		}
+		homeLocators.regionLink.click();
+		region.choose(homeLocators);
 	}
 
 	private void chooseCountry(Country country) {
-		if (country != Country.SkipCountry) {
-			home.countryLink.click();
-			switch (country) {
-			case GreatBritain:
-				home.GreatBritain.click();
-				break;
-			case Israel:
-				home.Israel.click();
-				break;
-			case AnyCountry:
-			default:
-				home.anyCountry.click();
-			}
-		}
+			homeLocators.countryLink.click();
+			country.choose(homeLocators);
 	}
 
 	private void chooseDeparturePort(Port departurePort) {
-		wait.until(ExpectedConditions.elementToBeClickable(home.depaturePortLink));
-		home.depaturePortLink.click();
-		
-		switch (departurePort) {
-		case Rome:
-			home.Rome.click();
-			break;
-		case Genoa:
-			home.Genoa.click();
-			break;
-		case Savona:
-			home.Savona.click();
-			break;
-		case Marseille:
-			home.Marseille.click();
-			break;
-		case AnyCity:
-		default:
-			home.anyCity.click();
-		}
+		homeLocators.depaturePortLink.click();
+		departurePort.choose(homeLocators);
 	}
 
 	private void chooseMinLength(int minCruiseLength) {
-		home.numberOfDaysLink.click();
-		home.daySlider.click();
+		homeLocators.numberOfDaysLink.click();
+		homeLocators.daySlider.click();
 		Actions action = new Actions(BaseTest.getDriver());
 		for (int i = 0; i < minCruiseLength; i++) {
 			action.sendKeys(Keys.ARROW_RIGHT).perform();
 		}
-		home.numberOfDaysLink.click();
+		homeLocators.numberOfDaysLink.click();
 	}
 }

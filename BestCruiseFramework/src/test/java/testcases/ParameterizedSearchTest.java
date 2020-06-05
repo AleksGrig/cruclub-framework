@@ -20,13 +20,13 @@ public class ParameterizedSearchTest extends BaseTest {
 		Cruise cruise = Cruise.getBuilder()
 				.withDestinationRegion(Region.valueOf(data.get("destinationRegion")))
 				.withDestinationCountry(Country.valueOf(data.get("destinationCountry")))
-				.withInitialPort(Port.valueOf(data.get("departurePort")))
+				.withDeparturePort(Port.valueOf(data.get("departurePort")))
 				.withMinCruiseLength((int) Double.parseDouble(data.get("minCruiseLength")))
-				.withDate(data.get("beforeDate"))
+				.withBeforeDate(data.get("beforeDate"))
 				.build();
 		double priceLimit = Double.parseDouble(data.get("priceLimit"));
 		
-		if (HomePage.load().findCruise(cruise).sort(By.Price).isFirstCheaperThan(priceLimit)) {
+		if (HomePage.load().findCruises(cruise).sort(By.Price).isFirstCheaperThan(priceLimit)) {
 			Assert.fail();
 		}
 	}

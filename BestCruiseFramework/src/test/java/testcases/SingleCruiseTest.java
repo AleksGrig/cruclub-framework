@@ -11,15 +11,15 @@ import utilities.DataProviders;
 public class SingleCruiseTest extends BaseTest{
 	@Test(dataProviderClass = DataProviders.class, dataProvider = "dp")
 	public void singleCruiseTest(HashMap<String, String> data) {
-		getDriver().get(data.get("link"));
-		double cruisePrice = getCruisePrice();
+		double cruisePrice = getCruisePrice(data.get("link"));
 		double priceLimit = Double.parseDouble(data.get("priceLimit"));
 		if (cruisePrice < priceLimit) {
 			Assert.fail();
 		}
 	}
 	
-	private double getCruisePrice() {
+	private double getCruisePrice(String link) {
+		getDriver().get(link);
 		return Double.parseDouble(
 				getDriver().findElement(By.id("ctl00_Content_ctlOffer_ctlPrice_lblPrice")).getText().split(" ")[0]);
 	}
