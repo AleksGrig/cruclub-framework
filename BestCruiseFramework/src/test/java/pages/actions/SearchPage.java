@@ -9,12 +9,10 @@ import testcases.BaseTest;
 
 public class SearchPage {
 
-	private SearchPageLocators searchLocators = new SearchPageLocators();
-	private AjaxElementLocatorFactory factory;
+	private final SearchPageLocators searchLocators = new SearchPageLocators();
 
 	public SearchPage() {
-		factory = new AjaxElementLocatorFactory(BaseTest.getDriver(), 15);
-		PageFactory.initElements(factory, searchLocators);
+		PageFactory.initElements(new AjaxElementLocatorFactory(BaseTest.getDriver(), 15), searchLocators);
 	}
 
 	public SearchPage sort(By by) {
@@ -25,10 +23,7 @@ public class SearchPage {
 
 	public boolean isFirstCheaperThan(double priceLimit) {
 		double price = Double.parseDouble(searchLocators.firstPriceTag.getText().split(" ")[0]);
-		if (price < priceLimit) {
-			return true;
-		} else {
-			return false;
-		}
+		if (price < priceLimit) return true;
+		return false;		
 	}
 }

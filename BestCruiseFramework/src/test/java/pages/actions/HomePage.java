@@ -19,12 +19,10 @@ import testcases.BaseTest;
 
 public class HomePage {
 
-	private HomePageLocators homeLocators = new HomePageLocators();	
-	private AjaxElementLocatorFactory factory;
+	private final HomePageLocators homeLocators = new HomePageLocators();	
 
 	public HomePage() {
-		factory = new AjaxElementLocatorFactory(BaseTest.getDriver(), 15);
-		PageFactory.initElements(factory, homeLocators);
+		PageFactory.initElements(new AjaxElementLocatorFactory(BaseTest.getDriver(), 15), homeLocators);
 		BaseTest.getDriver().get("https://www.cruclub.ru/");
 	}
 	
