@@ -26,8 +26,6 @@ public class ParameterizedSearchTest extends BaseTest {
 				.build();
 		double priceLimit = Double.parseDouble(data.get("priceLimit"));
 		
-		if (HomePage.load().findCruises(cruise).sort(By.Price).isFirstCheaperThan(priceLimit)) {
-			Assert.fail();
-		}
+		if (HomePage.load().findCruises(cruise).sort(By.Price).isFirstCheaperThan(priceLimit)) Assert.fail();
 	}
 }

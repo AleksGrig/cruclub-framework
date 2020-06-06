@@ -6,7 +6,8 @@ import java.util.HashMap;
 import org.testng.annotations.DataProvider;
 
 public class DataProviders {
-	private static ExcelReader excel = new ExcelReader("src/test/resources/excel/testdata.xlsx");
+	
+	private static final ExcelReader excel = new ExcelReader("src/test/resources/excel/testdata.xlsx");
 
 	@DataProvider(name = "dp", parallel = true)
 	public static synchronized Object[][] getData(Method method) {

@@ -13,9 +13,7 @@ public class SingleCruiseTest extends BaseTest{
 	public void singleCruiseTest(HashMap<String, String> data) {
 		double cruisePrice = getCruisePrice(data.get("link"));
 		double priceLimit = Double.parseDouble(data.get("priceLimit"));
-		if (cruisePrice < priceLimit) {
-			Assert.fail();
-		}
+		if (cruisePrice < priceLimit) Assert.fail();		
 	}
 	
 	private double getCruisePrice(String link) {
