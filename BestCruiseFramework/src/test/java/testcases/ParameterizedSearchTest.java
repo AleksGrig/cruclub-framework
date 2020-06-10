@@ -2,7 +2,6 @@ package testcases;
 
 import java.util.HashMap;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import builders.Cruise;
@@ -24,8 +23,11 @@ public class ParameterizedSearchTest extends BaseTest {
 				.withMinCruiseLength((int) Double.parseDouble(data.get("minCruiseLength")))
 				.withBeforeDate(data.get("beforeDate"))
 				.build();
-		double priceLimit = Double.parseDouble(data.get("priceLimit"));
 		
-		if (HomePage.load().findCruises(cruise).sort(By.Price).isFirstCheaperThan(priceLimit)) Assert.fail();
+		HomePage.load()
+				.findCruises(cruise)
+				.sort(By.Price)
+				.loadFirstCruise()
+				.isCheaperThan(Double.parseDouble(data.get("priceLimit"))); 
 	}
 }

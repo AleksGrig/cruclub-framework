@@ -20,10 +20,17 @@ public class SearchPage {
 		by.choose(searchLocators);
 		return this;
 	}
+	
+	public SingleCruisePage loadFirstCruise() {
+		searchLocators.firstCruiseLink.click();
+		return new SingleCruisePage();
+	}
 
-	public boolean isFirstCheaperThan(double priceLimit) {
+	public boolean isFirstCruiseCheaperThan(double priceLimit) {
 		double price = Double.parseDouble(searchLocators.firstPriceTag.getText().split(" ")[0]);
-		if (price < priceLimit) return true;
-		return false;		
+		if (price < priceLimit) {
+			return true;
+		}
+		return false;
 	}
 }

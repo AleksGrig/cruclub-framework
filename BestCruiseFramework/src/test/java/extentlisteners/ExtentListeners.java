@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import org.openqa.selenium.By;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
@@ -19,61 +20,63 @@ import com.aventstack.extentreports.markuputils.MarkupHelper;
 import testcases.BaseTest;
 import utilities.ExtentManager;
 
+@SuppressWarnings("unchecked")
 public class ExtentListeners implements ITestListener {
 
-	private static String fileName = "extent.html";
-	private static ExtentReports extent = ExtentManager
-			.createInstance(System.getProperty("user.dir") + "\\reports\\" + fileName);
-	public static ThreadLocal<ExtentTest> testReport = new ThreadLocal<ExtentTest>();
-
+	private static final ExtentReports extentReports = ExtentManager.createInstance("reports/extent.html");
+	private static final ThreadLocal<ExtentTest> testReports = new ThreadLocal<ExtentTest>();
+	private static final String priceLocator = "ctl00_Content_ctlOffer_ctlPrice_lblPrice";
+	
 	@Override
-	public synchronized void onTestStart(ITestResult result) {
-		@SuppressWarnings("unchecked")
+	public void onTestStart(ITestResult result) {
 		HashMap<String, String> data = (HashMap<String, String>) result.getParameters()[0];
-
-		ExtentTest test = extent
-				.createTest(result.getTestClass().getName() + "\n   @TestCase : " + data.get("cruiseName"));
-		testReport.set(test);
+		ExtentTest test = extentReports.createTest(result.getTestClass().getName() + "\n   @TestCase : " + data.get("cruiseName"));
+		testReports.set(test);
 	}
 
 	@Override
-	public synchronized void onTestSuccess(ITestResult result) {
+	public void onTestSuccess(ITestResult result) {
 		String methodName = result.getMethod().getMethodName();
+		String cruisePrice = BaseTest.getDriver().findElement(By.id(priceLocator)).getText().split(" ")[0];
 		String logText = "<b>" + "TEST CASE:- " + methodName.toUpperCase() + " PASSED" + "</b>";
-		testReport.get().pass("<a href='" + BaseTest.getDriver().getCurrentUrl() + "'>Cruises found</a>");
+		testReports.get().pass("<a href='" + BaseTest.getDriver().getCurrentUrl() + "'>Cruises found</a>" 
+				+ 	" --- CURRENT PRICE IS: " +  cruisePrice);
 		Markup m = MarkupHelper.createLabel(logText, ExtentColor.GREEN);
-		testReport.get().pass(m);
+		testReports.get().pass(m);
 	}
 
 	@Override
-	public synchronized void onTestFailure(ITestResult result) {
+	public void onTestFailure(ITestResult result) {
+		HashMap<String, String> data = (HashMap<String, String>) result.getParameters()[0];
+		String cruisePrice = BaseTest.getDriver().findElement(By.id(priceLocator)).getText().split(" ")[0];
 		try {
-			ExtentManager.captureScreenshot(BaseTest.getDriver());
-			testReport.get().fail("Screenshot",
-					MediaEntityBuilder.createScreenCaptureFromPath(ExtentManager.getScreenshotName()).build());
-			testReport.get().fail("<a href='" + BaseTest.getDriver().getCurrentUrl() + "'>Screenshot Link</a>");
+			String screenshotFolder = "reports/";
+			String screenshotName = data.get("cruiseName") + ".jpg";
+			ExtentManager.captureScreenshot(BaseTest.getDriver(), screenshotFolder, screenshotName);
+			testReports.get().fail("Screenshot", MediaEntityBuilder.createScreenCaptureFromPath(screenshotName).build());
+			testReports.get().fail("<a href='" + BaseTest.getDriver().getCurrentUrl() + "'>Screenshot Link</a>" 
+					+ 	" --- CURRENT PRICE IS: " +  cruisePrice);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 		String excepionMessage = Arrays.toString(result.getThrowable().getStackTrace());
-		testReport.get()
+		testReports.get()
 				.fail("<details>" + "<summary>" + "<b>" + "<font color=" + "red>" + "Exception Occured:Click to see"
 						+ "</font>" + "</b >" + "</summary>" + excepionMessage.replaceAll(",", "<br>") + "</details>"
 						+ " \n");
-
 		String failureLogg = "TEST CASE FAILED";
 		Markup m = MarkupHelper.createLabel(failureLogg, ExtentColor.RED);
-		testReport.get().log(Status.FAIL, m);
+		testReports.get().log(Status.FAIL, m);
 	}
 
 	@Override
-	public synchronized void onTestSkipped(ITestResult result) {
+	public void onTestSkipped(ITestResult result) {
 		String methodName = result.getMethod().getMethodName();
-		testReport.get().skip(result.getThrowable().getMessage());
+		testReports.get().skip(result.getThrowable().getMessage());
 		String logText = "<b>" + "Test Case:- " + methodName + " Skipped, message: " + "</b>";
 		Markup m = MarkupHelper.createLabel(logText, ExtentColor.YELLOW);
-		testReport.get().skip(m);
+		testReports.get().skip(m);
 	}
 
 	@Override
@@ -87,9 +90,9 @@ public class ExtentListeners implements ITestListener {
 	}
 
 	@Override
-	public synchronized void onFinish(ITestContext context) {
-		if (extent != null) {
-			extent.flush();
+	public void onFinish(ITestContext context) {
+		if (extentReports != null) {
+			extentReports.flush();
 		}
 	}
 }

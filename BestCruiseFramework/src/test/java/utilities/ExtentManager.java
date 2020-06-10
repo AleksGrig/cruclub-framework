@@ -14,44 +14,31 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 
-import testcases.BaseTest;
-
-public class ExtentManager extends BaseTest {
-
-	private static ExtentReports extent;
-	private static String screenshotName;
-	private static String screenshotFolder = "reports/";
-	private static Integer counter = 1;
-
-	public static String getScreenshotName() {
-		return screenshotName;
-	}
+public class ExtentManager {
 
 	public static ExtentReports createInstance(String fileName) {
-		if (extent == null) {
-			ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(fileName);
+		ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(fileName);
+		htmlReporter.config().setTheme(Theme.STANDARD);
+		htmlReporter.config().setDocumentTitle(fileName);
+		htmlReporter.config().setEncoding("utf-8");
+		htmlReporter.config().setReportName(fileName);
 
-			htmlReporter.config().setTheme(Theme.STANDARD);
-			htmlReporter.config().setDocumentTitle(fileName);
-			htmlReporter.config().setEncoding("utf-8");
-			htmlReporter.config().setReportName(fileName);
-
-			extent = new ExtentReports();
-			extent.attachReporter(htmlReporter);
-			extent.setSystemInfo("Automation Tester", "Alex");
-			extent.setSystemInfo("Build no", "1.0");
-		}
-		return extent;
+		ExtentReports extentReports = new ExtentReports();
+		extentReports.attachReporter(htmlReporter);
+		extentReports.setSystemInfo("Automation Tester", "Alex");
+		extentReports.setSystemInfo("Build no", "1.0");
+		return extentReports;
 	}
 
-	public static void captureScreenshot(WebDriver driver) {
+	public static void captureScreenshot(WebDriver driver, String screenshotFolder, String screenshotName) {
 		Actions action = new Actions(driver);
 		for (int i = 0; i < 15; i++) {
 			action.sendKeys(Keys.ARROW_DOWN).build().perform();
 		}
+//		String cruiseInfoLocator = ".win.green";
+//		WebElement element = driver.findElement(By.cssSelector(cruiseInfoLocator));
 		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		screenshotName = counter.toString() + ".jpg";
-		counter++;
+		
 		try {
 			FileUtils.copyFile(scrFile, new File(screenshotFolder + screenshotName));
 		} catch (IOException e) {

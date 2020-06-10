@@ -11,5 +11,7 @@ public class SearchPageLocators {
 	public WebElement minPriceDrop;
 	@FindBy(id = "ctl00_Content_rptrOffers_ctl01_ctlOffer_ctlPrice_lblPrice")
 	public WebElement firstPriceTag;
+	@FindBy(id = "ctl00_Content_rptrOffers_ctl01_ctlOffer_hlOffer")
+	public WebElement firstCruiseLink;
 
 }
