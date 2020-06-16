@@ -6,11 +6,10 @@ import java.util.HashMap;
 import org.testng.annotations.DataProvider;
 
 public class DataProviders {
-	
-	private static final ExcelReader excel = new ExcelReader("src/test/resources/excel/testdata.xlsx");
 
 	@DataProvider(name = "dp", parallel = true)
 	public Object[][] getData(Method method) {
+		ExcelReader excel = new ExcelReader("src/test/resources/excel/testdata.xlsx");
 		String sheetName = method.getName();
 		int rows = excel.getRowCount(sheetName);
 		int cols = excel.getColumnCount(sheetName);

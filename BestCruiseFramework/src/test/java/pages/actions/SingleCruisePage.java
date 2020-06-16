@@ -20,8 +20,8 @@ public class SingleCruisePage {
 		return new SingleCruisePage();
 	}
 	
-	public void isCheaperThan(double priceLimit) {
+	public void isCheaperThan(String priceLimit) {
 		double price = Double.parseDouble(singleCruiseLocators.cruisePrice.getText().split(" ")[0]);
-		if(price <= priceLimit) 	Assert.fail();		
+		if(price <= Double.parseDouble(priceLimit)) 	Assert.fail("Cruise found");		
 	}
 }

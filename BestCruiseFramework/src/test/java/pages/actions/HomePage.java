@@ -31,14 +31,14 @@ public class HomePage {
 	}
 
 	public SearchPage findCruises() {
-		return findCruises(Cruise.getBuilder().build());
+		return findCruises(Cruise.build());
 	}
 
 	public SearchPage findCruises(Cruise cruise) {
 		chooseRegion(cruise.getRegion());
 		chooseCountry(cruise.getCountry());
 		chooseDeparturePort(cruise.getDeparturePort());
-		chooseBeforeDate(cruise.getDate());
+		chooseBeforeDate(cruise.getBeforeDate());
 		chooseMinLength(cruise.getMinCruiseLength());
 		checkNumberOfCruises();
 		homeLocators.submitCruiseOptionsButton.click();

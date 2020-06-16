@@ -21,7 +21,7 @@ public class SearchPage {
 		return this;
 	}
 	
-	public SingleCruisePage loadFirstCruise() {
+	public SingleCruisePage loadFirst() {
 		searchLocators.firstCruiseLink.click();
 		return new SingleCruisePage();
 	}

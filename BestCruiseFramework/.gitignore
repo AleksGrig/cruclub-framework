@@ -129,4 +129,4 @@ $RECYCLE.BIN/
 /logs
 /target/
 /reports
-properties
+# properties
