@@ -34,10 +34,9 @@ public class HomePageLocators {
 	public WebElement countryLink;
 	@FindBy(id = "ddCountry_li_0")
 	public WebElement anyCountry;
-	@FindAll({ @FindBy(xpath = "//span[text()= 'Великобритания']"),
-			@FindBy(xpath = "//span[@class='linkselect-value']") })
+	@FindBy(id = "ddCountry_li_1")
 	public WebElement GreatBritain;
-	@FindAll({ @FindBy(xpath = "//span[text()= 'Израиль']"), @FindBy(xpath = "//span[@class='linkselect-value']") })
+	@FindBy(id = "ddCountry_li_2")
 	public WebElement Israel;
 	@FindBy(id = "rpDuration")
 	public WebElement numberOfDaysLink;
@@ -62,17 +61,13 @@ public class HomePageLocators {
 	public WebElement depaturePortLink;
 	@FindBy(id = "ddDCity_li_0")
 	public WebElement anyCity;
-	@FindAll({ @FindBy(xpath = "//span[text()='Италия, Генуя']"),
-			@FindBy(xpath = "//span[@class='linkselect-value']") })
+	@FindBy(id = "ddDCity_li_41")
 	public WebElement Genoa;
-	@FindAll({ @FindBy(xpath = "//span[text()= 'Италия, Рим (Чивитавеккья)']"),
-			@FindBy(xpath = "//span[@class='linkselect-value']") })
+	@FindBy(id = "ddDCity_li_47")
 	public WebElement Rome;
-	@FindAll({ @FindBy(xpath = "//span[text()='Италия, Савона']"),
-			@FindBy(xpath = "//span[@class='linkselect-value']") })
+	@FindBy(id = "ddDCity_li_48")
 	public WebElement Savona;
-	@FindAll({ @FindBy(xpath = "//span[text()='Франция, Марсель (Прованс)']"),
-			@FindBy(xpath = "//span[@class='linkselect-value']") })
+	@FindBy(id = "ddDCity_li_86")
 	public WebElement Marseille;
 	@FindBy(css = "span[class='linkselect-link-text']")
 	public List<WebElement> cruiseSearchOptions;
