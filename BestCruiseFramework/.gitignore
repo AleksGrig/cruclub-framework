@@ -129,4 +129,5 @@ $RECYCLE.BIN/
 /logs
 /target/
 /reports
+.idea
 # properties
