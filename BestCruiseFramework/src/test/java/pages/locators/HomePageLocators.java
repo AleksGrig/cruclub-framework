@@ -61,13 +61,13 @@ public class HomePageLocators {
 	public WebElement depaturePortLink;
 	@FindBy(id = "ddDCity_li_0")
 	public WebElement anyCity;
-	@FindBy(id = "ddDCity_li_41")
+	@FindBy(xpath = "//li[@data-value='3' and starts-with(@id, 'ddDCity')]")
 	public WebElement Genoa;
-	@FindBy(id = "ddDCity_li_47")
+	@FindBy(xpath = "//li[@data-value='15']")
 	public WebElement Rome;
-	@FindBy(id = "ddDCity_li_48")
+	@FindBy(xpath = "//li[@data-value='111']")
 	public WebElement Savona;
-	@FindBy(id = "ddDCity_li_86")
+	@FindBy(xpath = "//li[@data-value='32']")
 	public WebElement Marseille;
 	@FindBy(css = "span[class='linkselect-link-text']")
 	public List<WebElement> cruiseSearchOptions;
