@@ -128,7 +128,7 @@ $RECYCLE.BIN/
 /test-output
 /logs
 /target/
-/reports
+/reports/
 .idea
 /BestCruiseFramework.iml
 # properties
