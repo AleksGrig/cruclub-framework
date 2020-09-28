@@ -19,13 +19,13 @@ import testcases.BaseTest;
 
 public class HomePage {
 
-	private final HomePageLocators homeLocators = new HomePageLocators();	
+	private final HomePageLocators homeLocators = new HomePageLocators();
 
-	public HomePage() {
+	private HomePage() {
 		PageFactory.initElements(new AjaxElementLocatorFactory(BaseTest.getDriver(), 15), homeLocators);
 		BaseTest.getDriver().get("https://www.cruclub.ru/");
 	}
-	
+
 	public static HomePage load() {
 		return new HomePage();
 	}
@@ -42,7 +42,7 @@ public class HomePage {
 		chooseMinLength(cruise.getMinCruiseLength());
 		checkNumberOfCruises();
 		homeLocators.submitCruiseOptionsButton.click();
-		return new SearchPage();
+		return SearchPage.load();
 	}
 
 	private void checkNumberOfCruises() {
@@ -60,12 +60,9 @@ public class HomePage {
 	}
 
 	private void chooseDay(String date) {
-		List<WebElement> dates = homeLocators.dateBlock.findElements(By.tagName("td"));		
-		dates.stream()
-			.filter(e -> e.getText().equals(date))
-			.filter(e -> e.getAttribute("class").contains("available"))
-			.findFirst()
-			.ifPresent(WebElement::click);
+		List<WebElement> dates = homeLocators.dateBlock.findElements(By.tagName("td"));
+		dates.stream().filter(e -> e.getText().equals(date)).filter(e -> e.getAttribute("class").contains("available"))
+				.findFirst().ifPresent(WebElement::click);
 	}
 
 	private void chooseMonth(String month) {
@@ -80,8 +77,8 @@ public class HomePage {
 	}
 
 	private void chooseCountry(Country country) {
-			homeLocators.countryLink.click();
-			country.choose(homeLocators);
+		homeLocators.countryLink.click();
+		country.choose(homeLocators);
 	}
 
 	private void chooseDeparturePort(Port departurePort) {

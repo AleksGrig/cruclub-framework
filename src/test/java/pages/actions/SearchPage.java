@@ -11,8 +11,12 @@ public class SearchPage {
 
 	private final SearchPageLocators searchLocators = new SearchPageLocators();
 
-	public SearchPage() {
+	private SearchPage() {
 		PageFactory.initElements(new AjaxElementLocatorFactory(BaseTest.getDriver(), 15), searchLocators);
+	}
+
+	public static SearchPage load() {
+		return new SearchPage();
 	}
 
 	public SearchPage sort(By by) {
@@ -20,10 +24,10 @@ public class SearchPage {
 		by.choose(searchLocators);
 		return this;
 	}
-	
+
 	public SingleCruisePage loadFirst() {
 		searchLocators.firstCruiseLink.click();
-		return new SingleCruisePage();
+		return SingleCruisePage.load();
 	}
 
 	public boolean isFirstCruiseCheaperThan(double priceLimit) {
