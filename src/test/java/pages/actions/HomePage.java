@@ -61,8 +61,10 @@ public class HomePage {
 
 	private void chooseDay(String date) {
 		List<WebElement> dates = homeLocators.dateBlock.findElements(By.tagName("td"));
-		dates.stream().filter(e -> e.getText().equals(date)).filter(e -> e.getAttribute("class").contains("available"))
-				.findFirst().ifPresent(WebElement::click);
+		dates.stream()
+			.filter(e -> e.getText().equals(date))
+			.filter(e -> e.getAttribute("class").contains("available"))
+			.findFirst().ifPresent(WebElement::click);
 	}
 
 	private void chooseMonth(String month) {
