@@ -131,4 +131,5 @@ $RECYCLE.BIN/
 /reports/
 .idea
 /BestCruiseFramework.iml
+.vscode
 # properties
